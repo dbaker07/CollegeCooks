@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CollegeCooks</string>
+    <string name="InsertRecipe">Insert recipe here</string>
+    <string name="RecipePicture">Picture of recipe</string>
 </resources>
