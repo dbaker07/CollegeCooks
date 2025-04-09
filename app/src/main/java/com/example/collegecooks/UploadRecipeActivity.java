@@ -53,7 +53,6 @@ public class UploadRecipeActivity extends AppCompatActivity {
     }
 
     private void saveRecipe(String recipeName, String ingredients, String instructions) {
-        //  Example: In a real app, you would save to a database or send to a server.
         System.out.println("Recipe Name: " + recipeName);
         System.out.println("Ingredients: " + ingredients);
         System.out.println("Instructions: " + instructions);
