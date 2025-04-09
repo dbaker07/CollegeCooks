@@ -1,18 +1,18 @@
 package com.example.collegecooks;
 
 public class Ingredient {
-    private String name;
-    private String unit;
-    public Ingredient (String ingredientName, String ingredientUnit) {
-        name = ingredientName;
-        unit = ingredientUnit;
+    private double amt;
+    private String info;
+    public Ingredient (double ingredientAmt, String ingredientInfo) {
+        amt = ingredientAmt;
+        info = ingredientInfo;
     }
 
-    public String getName() {
-        return name;
+    public double getAmt() {
+        return amt;
     }
-    public String getUnit() {
-        return unit;
+    public String getInfo() {
+        return info;
     }
 
 }
