@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">CollegeCooks</string>
+    <string name="InsertRecipe">Insert recipe here</string>
+    <string name="RecipePicture">Picture of recipe</string>
+    <string name="BackButton">Back</string>
+    <string name="instructions">Instructions</string>
+    <string name="upload_recipe">Upload Recipe</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="recipe_name">Recipe Name</string>
+    <string name="recipeSearch">Search for a recipe!</string>
+    <string name="recipeTitle">placeholder recipe title</string>
 </resources>
