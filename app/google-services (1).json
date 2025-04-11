@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "147496160254",
+    "project_id": "collegecooks-ab879",
+    "storage_bucket": "collegecooks-ab879.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:147496160254:android:74e1e855f12c96c54f8eaf",
+        "android_client_info": {
+          "package_name": "com.example.collegecooks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "147496160254-5k1phevrur31nn542dgp3766p5rg52fs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATkvyIkbhScboo7xsR4t365fIwZFVUBYI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "147496160254-5k1phevrur31nn542dgp3766p5rg52fs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
