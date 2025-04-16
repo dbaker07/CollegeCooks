@@ -11,4 +11,5 @@
     <string name="recipeTitle">placeholder recipe title</string>
     <string name="select_image">Select Image</string>
     <string name="recipe_image">Recipe Image</string>
+    <string name="action_settings">settings\n</string>
 </resources>
