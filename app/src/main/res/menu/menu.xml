@@ -1,16 +1,4 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- "Mark Favorite", must appear as action button if possible. -->
-    <item
-        android:id="@+id/action_favorite"
-        app:icon="@drawable/ic_launcher_background"
-        android:title="@string/recipe_name"
-        app:showAsAction="ifRoom"/>
-
-    <!-- Settings, must always be in the overflow. -->
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        app:showAsAction="never"/>
-
 </menu>

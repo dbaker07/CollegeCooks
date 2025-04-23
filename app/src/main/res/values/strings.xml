@@ -19,7 +19,4 @@
     <string name="select_image">Select Image</string>
     <string name="recipe_image">Recipe Image</string>
     <string name="action_settings">settings\n</string>
-    <string name="amount_hint">Amount</string>
-    <string name="unit_hint">Unit</string>
-    <string name="duration"> Duration (Minutes)</string>
 </resources>
