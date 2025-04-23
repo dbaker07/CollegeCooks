@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,13 +12,37 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class UploadRecipeActivity extends AppCompatActivity {
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
+public class UploadRecipeActivity extends AppCompatActivity {
+        //Inititalize all variables
     private EditText recipeNameEditText;
-    private EditText ingredientsEditText;
-    private EditText instructionsEditText;
+    private EditText amt1EditText;
+    private EditText unit1EditText;
+    private EditText ingredient1EditText;
+    private EditText amt2EditText;
+    private EditText unit2EditText;
+    private EditText ingredient2EditText;
+    private EditText amt3EditText;
+    private EditText unit3EditText;
+    private EditText ingredient3EditText;
+    private EditText amt4EditText;
+    private EditText unit4EditText;
+    private EditText ingredient4EditText;
+    private EditText amt5EditText;
+    private EditText unit5EditText;
+    private EditText ingredient5EditText;
+    private EditText directionsEditText;
+    private EditText durationEditText;
     private ImageView recipeImageView;
 
     private final ActivityResultLauncher<Intent> imagePickerLauncher =
@@ -38,8 +63,23 @@ public class UploadRecipeActivity extends AppCompatActivity {
         setContentView(R.layout.upload_recipe);
 
         recipeNameEditText = findViewById(R.id.recipeNameEditText);
-        ingredientsEditText = findViewById(R.id.ingredientsEditText);
-        instructionsEditText = findViewById(R.id.instructionsEditText);
+        durationEditText = findViewById(R.id.durationEditText);
+        amt1EditText = findViewById(R.id.amt1EditText);
+        unit1EditText = findViewById(R.id.unit1EditText);
+        ingredient1EditText = findViewById(R.id.ingredient1EditText);
+        amt2EditText = findViewById(R.id.amt2EditText);
+        unit2EditText = findViewById(R.id.unit2EditText);
+        ingredient2EditText = findViewById(R.id.ingredient2EditText);
+        amt3EditText = findViewById(R.id.amt3EditText);
+        unit3EditText = findViewById(R.id.unit3EditText);
+        ingredient3EditText = findViewById(R.id.ingredient3EditText);
+        amt4EditText = findViewById(R.id.amt4EditText);
+        unit4EditText = findViewById(R.id.unit4EditText);
+        ingredient4EditText = findViewById(R.id.ingredient4EditText);
+        amt5EditText = findViewById(R.id.amt5EditText);
+        unit5EditText = findViewById(R.id.unit5EditText);
+        ingredient5EditText = findViewById(R.id.ingredient5EditText);
+        directionsEditText = findViewById(R.id.DirectionsEditText);
         // Initialize the new views
         recipeImageView = findViewById(R.id.recipeImageView);
         Button selectImageButton = findViewById(R.id.selectImageButton);
@@ -67,30 +107,108 @@ public class UploadRecipeActivity extends AppCompatActivity {
     }
 
     private void uploadRecipe() {
-        String recipeName = recipeNameEditText.getText().toString();
-        String ingredients = ingredientsEditText.getText().toString();
-        String instructions = instructionsEditText.getText().toString();
-
-        if (recipeName.isEmpty() || ingredients.isEmpty() || instructions.isEmpty()) {
+        if (!validateForm()) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return;
         }
+        String recipeName = recipeNameEditText.getText().toString();
+        ArrayList <Ingredient> ingredients = makeIngredientList();
+        String directions = directionsEditText.getText().toString();
+        String duration = durationEditText.getText().toString();
+
+        Recipe recipe = new Recipe(recipeName, duration, ingredients, directions );
+
+        Log.d("UploadRecipeActivity", "Creating firebase instance");
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        Log.d("UploadRecipeActivity", "Creating the reference");
+        DatabaseReference newref = database.getReference("RecipeList");
+        Log.d("UploadRecipeActivity" , "Setting reference value");
+        newref.child(recipeName).setValue(recipe);
+        Log.d("UploadRecipeActivity" , "Adding the value event listener");
+        newref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.d("UploadRecipeActivity" , "Setting the string value to the reference value");
+                Recipe value = snapshot.getValue(Recipe.class);
+                Log.d("FirebaseTest", "Value is:" + value);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("UploadRecipeActivity" , "Logging an error");
+                Log.w("FirebaseTest", "Failed to read value", error.toException());
+            }
+        });
 
 
         String imageString = "";
 
-        saveRecipe(recipeName, ingredients, instructions);
+        /*saveRecipe(recipeName, ingredients, instructions);
         Toast.makeText(this, "Recipe Uploaded: " + recipeName, Toast.LENGTH_SHORT).show();
 
         recipeNameEditText.setText("");
         ingredientsEditText.setText("");
         instructionsEditText.setText("");
-    }
+    }*/
 
-    private void saveRecipe(String recipeName, String ingredients, String instructions) {
+    /*private void saveRecipe(String recipeName, String ingredients, String instructions) {
 
         System.out.println("Recipe Name: " + recipeName);
         System.out.println("Ingredients: " + ingredients);
         System.out.println("Instructions: " + instructions);
+    }*/
+    }
+    public ArrayList <Ingredient> makeIngredientList() {
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
+
+        //first three ingredients are required
+        Ingredient ing1 = createIngredient(amt1EditText,unit1EditText,ingredient1EditText);
+        ingredients.add(ing1);
+        Ingredient ing2 = createIngredient(amt2EditText,unit2EditText,ingredient2EditText);
+        ingredients.add(ing2);
+        Ingredient ing3 = createIngredient(amt3EditText,unit3EditText,ingredient3EditText);
+        ingredients.add(ing3);
+        //check if ingredient 4 can be added
+        Ingredient ing4 = createIngredient(amt4EditText,unit4EditText,ingredient4EditText);
+        if(ing4 != null) {ingredients.add(ing4);}
+        //check if ingredient 5 can be added
+        Ingredient ing5 = createIngredient(amt5EditText,unit5EditText,ingredient5EditText);
+        if(ing5 != null) {ingredients.add(ing5);}
+        return ingredients;
+    }
+    private boolean validateForm() {
+        if (recipeNameEditText.getText().toString().isEmpty()) return false;
+        if (durationEditText.getText().toString().isEmpty()) return false;
+        if (directionsEditText.getText().toString().isEmpty()) return false;
+
+        // Check at least the first 3 ingredients are fully filled
+        return !(amt1EditText.getText().toString().isEmpty() ||
+                unit1EditText.getText().toString().isEmpty() ||
+                ingredient1EditText.getText().toString().isEmpty() ||
+
+                amt2EditText.getText().toString().isEmpty() ||
+                unit2EditText.getText().toString().isEmpty() ||
+                ingredient2EditText.getText().toString().isEmpty() ||
+
+                amt3EditText.getText().toString().isEmpty() ||
+                unit3EditText.getText().toString().isEmpty() ||
+                ingredient3EditText.getText().toString().isEmpty());
+    }
+    private Ingredient createIngredient(EditText amtEditText, EditText unitEditText, EditText infoEditText) {
+        String amtStr = amtEditText.getText().toString().trim();
+        String unit = unitEditText.getText().toString().trim();
+        String info = infoEditText.getText().toString().trim();
+
+        if (amtStr.isEmpty() || unit.isEmpty() || info.isEmpty()) {
+            return null; // Incomplete ingredient
+        }
+
+        try {
+            double amount = Double.parseDouble(amtStr);
+            return new Ingredient(amount, unit, info);
+        } catch (NumberFormatException e) {
+            Log.e("UploadRecipeActivity", "Invalid amount: " + amtStr);
+            return null;
+        }
     }
 }

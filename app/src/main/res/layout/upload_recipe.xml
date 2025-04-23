@@ -9,53 +9,212 @@
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:padding="16dp">
-        <EditText
+
+         <EditText
             android:id="@+id/recipeNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:hint="@string/recipe_name"
-            android:minHeight="48dp" />
+             android:hint="@string/recipe_name"
+             android:importantForAutofill="no"
+             android:inputType="textCapWords"
+             android:minHeight="48dp" />
+         <EditText
+             android:id="@+id/durationEditText"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="8dp"
+             android:hint="@string/duration"
+             android:importantForAutofill="no"
+             android:inputType="textCapWords"
+             android:minHeight="48dp" />
+            <!--Ingredient 1 Info-->
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="horizontal"
+             android:layout_marginBottom="8dp">
 
-        <EditText
-            android:id="@+id/ingredient1EditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:gravity="top"
-            android:hint="@string/ingredient1"
-            android:minHeight="48dp" />
-        <EditText
-            android:id="@+id/ingredient2EditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:gravity="top"
-            android:hint="@string/ingredient2"
-            android:minHeight="48dp" />
-        <EditText
-            android:id="@+id/ingredient3EditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:gravity="top"
-            android:hint="@string/ingredient3"
-            android:minHeight="48dp" />
-        <EditText
-            android:id="@+id/ingredient4EditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:gravity="top"
-            android:hint="@string/ingredient4"
-            android:minHeight="48dp" /><EditText
-        android:id="@+id/ingredient5EditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:gravity="top"
-        android:hint="@string/ingredient5"
-        android:minHeight="48dp" />
+             <EditText
+                 android:id="@+id/amt1EditText"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:hint="@string/amount_hint"
+                 android:importantForAutofill="no"
+                 android:minHeight="48dp"
+                 android:inputType="number" />
+             <EditText
+                 android:id="@+id/unit1EditText"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:hint="@string/unit_hint"
+                 android:importantForAutofill="no"
+                 android:minHeight="48dp"
+                 android:inputType="textCapWords" />
+
+             <EditText
+                 android:id="@+id/ingredient1EditText"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="2"
+                 android:hint="@string/ingredient1"
+                 android:importantForAutofill="no"
+                 android:minHeight="48dp"
+                 android:gravity="top"
+                 android:inputType="textCapWords" />
+         </LinearLayout>
+
+         <!--Ingredient 2 Info-->
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="horizontal"
+             android:layout_marginBottom="8dp">
+
+             <EditText
+                 android:id="@+id/amt2EditText"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:hint="@string/amount_hint"
+                 android:importantForAutofill="no"
+                 android:minHeight="48dp"
+                 android:inputType="number" />
+             <EditText
+                 android:id="@+id/unit2EditText"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:hint="@string/unit_hint"
+                 android:importantForAutofill="no"
+                 android:minHeight="48dp"
+                 android:inputType="textCapWords" />
+
+             <EditText
+                 android:id="@+id/ingredient2EditText"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="2"
+                 android:hint="@string/ingredient2"
+                 android:importantForAutofill="no"
+                 android:minHeight="48dp"
+                 android:gravity="top"
+                 android:inputType="textCapWords" />
+         </LinearLayout>
+         <!-- Ingredient 3 Info-->
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="horizontal"
+             android:layout_marginBottom="8dp">
+
+             <EditText
+                 android:id="@+id/amt3EditText"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:hint="@string/amount_hint"
+                 android:importantForAutofill="no"
+                 android:minHeight="48dp"
+                 android:inputType="number" />
+             <EditText
+                 android:id="@+id/unit3EditText"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:hint="@string/unit_hint"
+                 android:importantForAutofill="no"
+                 android:minHeight="48dp"
+                 android:inputType="textCapWords" />
+
+             <EditText
+                 android:id="@+id/ingredient3EditText"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="2"
+                 android:hint="@string/ingredient3"
+                 android:importantForAutofill="no"
+                 android:minHeight="48dp"
+                 android:gravity="top"
+                 android:inputType="textCapWords" />
+         </LinearLayout>
+         <!--Ingredient 4 Info-->
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="horizontal"
+             android:layout_marginBottom="8dp">
+
+             <EditText
+                 android:id="@+id/amt4EditText"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:hint="@string/amount_hint"
+                 android:importantForAutofill="no"
+                 android:minHeight="48dp"
+                 android:inputType="number" />
+             <EditText
+                 android:id="@+id/unit4EditText"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:hint="@string/unit_hint"
+                 android:importantForAutofill="no"
+                 android:minHeight="48dp"
+                 android:inputType="textCapWords" />
+
+             <EditText
+                 android:id="@+id/ingredient4EditText"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="2"
+                 android:hint="@string/ingredient4"
+                 android:importantForAutofill="no"
+                 android:minHeight="48dp"
+                 android:gravity="top"
+                 android:inputType="textCapWords" />
+         </LinearLayout>
+         <!--Ingredient 5 Info-->
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="horizontal"
+             android:layout_marginBottom="8dp">
+
+             <EditText
+                 android:id="@+id/amt5EditText"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:hint="@string/amount_hint"
+                 android:importantForAutofill="no"
+                 android:minHeight="48dp"
+                 android:inputType="number" />
+             <EditText
+                 android:id="@+id/unit5EditText"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:hint="@string/unit_hint"
+                 android:importantForAutofill="no"
+                 android:minHeight="48dp"
+                 android:inputType="textCapWords" />
+
+             <EditText
+                 android:id="@+id/ingredient5EditText"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="2"
+                 android:hint="@string/ingredient5"
+                 android:importantForAutofill="no"
+                 android:minHeight="48dp"
+                 android:gravity="top"
+                 android:inputType="textCapWords" />
+         </LinearLayout>
+
 
         <ImageView
             android:id="@+id/recipeImageView"
@@ -77,11 +236,14 @@
         <EditText
             android:id="@+id/DirectionsEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:maxWidth="488dp"
+            android:importantForAutofill="no"
             android:layout_marginBottom="16dp"
             android:layout_weight="1"
             android:gravity="top"
             android:hint="@string/directions"
+            android:inputType="textCapWords"
             android:minHeight="48dp" />
 
         <Button
