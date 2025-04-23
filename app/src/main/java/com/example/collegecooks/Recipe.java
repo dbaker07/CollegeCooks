@@ -7,9 +7,9 @@ String name;
 String duration;
 ArrayList<Ingredient> ingredientList;
 
-ArrayList<String> directions;
+String directions;
 
-    public Recipe(String recipeName, String time, ArrayList<Ingredient> ingredients, ArrayList <String> steps) {
+    public Recipe(String recipeName, String time, ArrayList<Ingredient> ingredients, String steps) {
         name = recipeName;
         duration = time;
         ingredientList = ingredients;
@@ -25,7 +25,7 @@ ArrayList<String> directions;
     public String getDuration() {
         return duration;
     }
-    public ArrayList<String> getDirections() {
+    public String getDirections() {
         return directions;
     }
 }

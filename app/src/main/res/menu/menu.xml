@@ -1,7 +1,4 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/upload_recipe"
-        android:icon="@drawable/ic_launcher_background"
-        android:title="@string/upload_recipe" />
+
 </menu>
