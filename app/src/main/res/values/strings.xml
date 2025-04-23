@@ -8,6 +8,9 @@
     <string name="instructions">Instructions</string>
     <string name="upload_recipe">Upload Recipe</string>
     <string name="directions">Directions</string>
+    <string name="amount_hint">Amount</string>
+    <string name="unit_hint">Unit</string>
+    <string name="duration">Duration</string>
     <string name="ingredient1"> Ingredient 1</string>
     <string name="ingredient2"> Ingredient 2</string>
     <string name="ingredient3"> Ingredient 3</string>

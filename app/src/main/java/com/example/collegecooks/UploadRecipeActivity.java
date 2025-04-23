@@ -61,7 +61,7 @@ public class UploadRecipeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.upload_recipe);
-
+        //Converts each xml object into a java object
         recipeNameEditText = findViewById(R.id.recipeNameEditText);
         durationEditText = findViewById(R.id.durationEditText);
         amt1EditText = findViewById(R.id.amt1EditText);
@@ -106,6 +106,9 @@ public class UploadRecipeActivity extends AppCompatActivity {
         imagePickerLauncher.launch(intent);
     }
 
+    /**
+     * Uploads the recipe into Firebase
+     */
     private void uploadRecipe() {
         if (!validateForm()) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
