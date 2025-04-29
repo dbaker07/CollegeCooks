@@ -99,6 +99,7 @@ public class UploadRecipeActivity extends AppCompatActivity {
                 uploadRecipe();
             }
         });
+
     }
 
     private void selectImage() {
@@ -110,61 +111,44 @@ public class UploadRecipeActivity extends AppCompatActivity {
      * Uploads the recipe into Firebase
      */
     private void uploadRecipe() {
+        //makes sure all required fields are filled in, does not allow user to upload otherwise
         if (!validateForm()) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return;
         }
+        //constructs the components of a recipe object
         String recipeName = recipeNameEditText.getText().toString();
         ArrayList <Ingredient> ingredients = makeIngredientList();
         String directions = directionsEditText.getText().toString();
         String duration = durationEditText.getText().toString();
-
+        //creates the recipe object
         Recipe recipe = new Recipe(recipeName, duration, ingredients, directions );
-
+        //Logs the firebase upload and pushes the recipe components to firebase
         Log.d("UploadRecipeActivity", "Creating firebase instance");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         Log.d("UploadRecipeActivity", "Creating the reference");
         DatabaseReference newref = database.getReference("RecipeList");
         Log.d("UploadRecipeActivity" , "Setting reference value");
-        newref.child(recipeName).setValue(recipe);
-        Log.d("UploadRecipeActivity" , "Adding the value event listener");
-        newref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.d("UploadRecipeActivity" , "Setting the string value to the reference value");
-                Recipe value = snapshot.getValue(Recipe.class);
-                Log.d("FirebaseTest", "Value is:" + value);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("UploadRecipeActivity" , "Logging an error");
-                Log.w("FirebaseTest", "Failed to read value", error.toException());
-            }
-        });
+        newref.child(recipeName).setValue(recipe)
+                .addOnSuccessListener(aVoid -> {
+                    clearForm();
+                    Toast.makeText(this, "Recipe Uploaded Successfully!", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Failed to upload recipe: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                });
 
 
-        String imageString = "";
-
-        /*saveRecipe(recipeName, ingredients, instructions);
-        Toast.makeText(this, "Recipe Uploaded: " + recipeName, Toast.LENGTH_SHORT).show();
-
-        recipeNameEditText.setText("");
-        ingredientsEditText.setText("");
-        instructionsEditText.setText("");
-    }*/
-
-    /*private void saveRecipe(String recipeName, String ingredients, String instructions) {
-
-        System.out.println("Recipe Name: " + recipeName);
-        System.out.println("Ingredients: " + ingredients);
-        System.out.println("Instructions: " + instructions);
-    }*/
     }
+
+    /**
+     * Makes the list of ingredients
+     * @return will return an arrayList of ingredients
+     */
     public ArrayList <Ingredient> makeIngredientList() {
         ArrayList<Ingredient> ingredients = new ArrayList<>();
 
-        //first three ingredients are required
+        //first three ingredients are required and already validated in main code
         Ingredient ing1 = createIngredient(amt1EditText,unit1EditText,ingredient1EditText);
         ingredients.add(ing1);
         Ingredient ing2 = createIngredient(amt2EditText,unit2EditText,ingredient2EditText);
@@ -179,9 +163,18 @@ public class UploadRecipeActivity extends AppCompatActivity {
         if(ing5 != null) {ingredients.add(ing5);}
         return ingredients;
     }
+
+    /**
+     * Validates if the required components of a recipe are all filled out (name of recipe, duration
+     * that it takes to make the recipe, directions, first three ingredients)
+     * @return will return true if all fields are filled, will return false otherwise
+     */
     private boolean validateForm() {
+        //checks if recipeName is emppty
         if (recipeNameEditText.getText().toString().isEmpty()) return false;
+        //checks if duration is empty
         if (durationEditText.getText().toString().isEmpty()) return false;
+        //checks if directions are empty
         if (directionsEditText.getText().toString().isEmpty()) return false;
 
         // Check at least the first 3 ingredients are fully filled
@@ -197,15 +190,23 @@ public class UploadRecipeActivity extends AppCompatActivity {
                 unit3EditText.getText().toString().isEmpty() ||
                 ingredient3EditText.getText().toString().isEmpty());
     }
+
+    /**
+     * Creates a new ingredient object, takes in the EditText values and converts them to strings
+     * @param amtEditText is the EdiText of the amount
+     * @param unitEditText is the EditText that takes in the unit
+     * @param infoEditText is the EditText that takes the directions
+     * @return will return an new ingredient object
+     */
     private Ingredient createIngredient(EditText amtEditText, EditText unitEditText, EditText infoEditText) {
         String amtStr = amtEditText.getText().toString().trim();
         String unit = unitEditText.getText().toString().trim();
         String info = infoEditText.getText().toString().trim();
-
+        //nulls an ingredient if one or more fields is empty
         if (amtStr.isEmpty() || unit.isEmpty() || info.isEmpty()) {
-            return null; // Incomplete ingredient
+            return null;
         }
-
+        //sends an error if the user enters a string instead of a double (prevents crashing)
         try {
             double amount = Double.parseDouble(amtStr);
             return new Ingredient(amount, unit, info);
@@ -213,5 +214,32 @@ public class UploadRecipeActivity extends AppCompatActivity {
             Log.e("UploadRecipeActivity", "Invalid amount: " + amtStr);
             return null;
         }
+    }
+    public void clearForm() {
+        recipeNameEditText.setText("");
+        durationEditText.setText("");
+
+        amt1EditText.setText("");
+        unit1EditText.setText("");
+        ingredient1EditText.setText("");
+
+        amt2EditText.setText("");
+        unit2EditText.setText("");
+        ingredient2EditText.setText("");
+
+        amt3EditText.setText("");
+        unit3EditText.setText("");
+        ingredient3EditText.setText("");
+
+        amt4EditText.setText("");
+        unit4EditText.setText("");
+        ingredient4EditText.setText("");
+
+        amt5EditText.setText("");
+        unit5EditText.setText("");
+        ingredient5EditText.setText("");
+
+        directionsEditText.setText("");
+        recipeImageView.setImageResource(R.color.gray); // Reset the imageView
     }
 }
