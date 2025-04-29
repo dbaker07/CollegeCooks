@@ -9,6 +9,7 @@ ArrayList<Ingredient> ingredientList;
 
 String directions;
 
+
     public Recipe(String recipeName, String time, ArrayList<Ingredient> ingredients, String steps) {
         name = recipeName;
         duration = time;
