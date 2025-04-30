@@ -5,37 +5,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingTop="100dp">
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/my_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp"
         android:text="@string/recipeSearch" />
-
-    <SearchView
-        android:id="@+id/search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="500dp">
+        android:layout_height="700dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <SearchView
+                android:id="@+id/search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -51,8 +47,8 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="40dp"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="ImageContrastCheck"
-                app:srcCompat="@drawable/ic_launcher_background" />
+                app:srcCompat="@drawable/ic_launcher_background"
+                tools:ignore="ImageContrastCheck" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -93,11 +89,8 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/menu"/>
+        app:menu="@menu/menu" />
 
 </LinearLayout>
