@@ -2,15 +2,12 @@ package com.example.collegecooks;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.SearchView;
 
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 
 public class Search extends AppCompatActivity {
 
@@ -37,11 +34,6 @@ public class Search extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(item -> {
         if (item.getItemId() == R.id.upload_recipe) {
             Intent i = new Intent(Search.this, UploadRecipeActivity.class);
-            Search.this.startActivity(i);
-            return true;
-        }
-        if (item.getItemId() == R.id.search_nav) {
-            Intent i = new Intent(Search.this, Search.class);
             Search.this.startActivity(i);
             return true;
         }

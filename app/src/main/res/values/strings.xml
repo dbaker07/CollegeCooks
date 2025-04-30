@@ -9,7 +9,17 @@
     <string name="upload_recipe">Upload Recipe</string>
     <string name="directions">Directions</string>
     <string name="amount_hint">Amount</string>
+    <string name="amount_1_hint">Amount 1</string>
+    <string name="amount_2_hint">Amount 2</string>
+    <string name="amount_3_hint">Amount 3</string>
+    <string name="amount_4_hint">Amount 4</string>
+    <string name="amount_5_hint">Amount 5</string>
     <string name="unit_hint">Unit</string>
+    <string name="unit_1_hint">Unit 1</string>
+    <string name="unit_2_hint">Unit 2</string>
+    <string name="unit_3_hint">Unit 3</string>
+    <string name="unit_4_hint">Unit 4</string>
+    <string name="unit_5_hint">Unit 5</string>
     <string name="duration">Duration</string>
     <string name="ingredient1"> Ingredient 1</string>
     <string name="ingredient2"> Ingredient 2</string>
@@ -22,4 +32,5 @@
     <string name="select_image">Select Image</string>
     <string name="recipe_image">Recipe Image</string>
     <string name="action_settings">settings\n</string>
+    <string name="upload_a_recipe">Upload a recipe!</string>
 </resources>

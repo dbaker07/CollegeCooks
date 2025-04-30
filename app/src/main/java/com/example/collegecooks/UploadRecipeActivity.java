@@ -12,20 +12,16 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class UploadRecipeActivity extends AppCompatActivity {
-        //Inititalize all variables
+        //Initialize all variables
     private EditText recipeNameEditText;
     private EditText amt1EditText;
     private EditText unit1EditText;
@@ -103,11 +99,6 @@ public class UploadRecipeActivity extends AppCompatActivity {
         //return false;
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener(item -> {
-            if (item.getItemId() == R.id.upload_recipe) {
-                Intent i = new Intent(UploadRecipeActivity.this, UploadRecipeActivity.class);
-                UploadRecipeActivity.this.startActivity(i);
-                return true;
-            }
             if (item.getItemId() == R.id.search_nav) {
                 Intent i = new Intent(UploadRecipeActivity.this, Search.class);
                 UploadRecipeActivity.this.startActivity(i);
@@ -185,7 +176,7 @@ public class UploadRecipeActivity extends AppCompatActivity {
      * @return will return true if all fields are filled, will return false otherwise
      */
     private boolean validateForm() {
-        //checks if recipeName is emppty
+        //checks if recipeName is empty
         if (recipeNameEditText.getText().toString().isEmpty()) return false;
         //checks if duration is empty
         if (durationEditText.getText().toString().isEmpty()) return false;
