@@ -115,6 +115,21 @@ public class UploadRecipeActivity extends AppCompatActivity {
             }
             return false;
         });
+        //return false;
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.upload_recipe) {
+                Intent i = new Intent(UploadRecipeActivity.this, UploadRecipeActivity.class);
+                UploadRecipeActivity.this.startActivity(i);
+                return true;
+            }
+            if (item.getItemId() == R.id.search_nav) {
+                Intent i = new Intent(UploadRecipeActivity.this, Search.class);
+                UploadRecipeActivity.this.startActivity(i);
+                return true;
+            }
+            return false;
+        });
 
     }
 
