@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 
 public class Recipe {
+
 private String name;
 private String duration;
 private ArrayList<Ingredient> ingredients;
@@ -19,6 +20,7 @@ private String directions;
         imageUrl = "";
         directions = "";
     }
+
     public Recipe(String recipeName, String time, ArrayList<Ingredient> ingredients, String steps, String url) {
         name = recipeName;
         duration = time;
@@ -27,12 +29,14 @@ private String directions;
         imageUrl = url;
 
     }
+
     public Recipe(String recipeName, String time, ArrayList<Ingredient> ingredients, String steps){
         name = recipeName;
         duration = time;
         this.ingredients = ingredients;
         directions = steps;
     }
+
     public String getName() {
         return name;
     }

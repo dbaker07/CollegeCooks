@@ -13,19 +13,18 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
 
 import java.util.ArrayList;
 
@@ -110,11 +109,6 @@ public class UploadRecipeActivity extends AppCompatActivity {
         //return false;
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener(item -> {
-            if (item.getItemId() == R.id.upload_recipe) {
-                Intent i = new Intent(UploadRecipeActivity.this, UploadRecipeActivity.class);
-                UploadRecipeActivity.this.startActivity(i);
-                return true;
-            }
             if (item.getItemId() == R.id.search_nav) {
                 Intent i = new Intent(UploadRecipeActivity.this, Search.class);
                 UploadRecipeActivity.this.startActivity(i);
