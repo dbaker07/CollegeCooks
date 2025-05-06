@@ -20,17 +20,16 @@ public class Search extends AppCompatActivity {
     private RecipeRetriever recipeRetriever;
     private List<Recipe> allRecipes;
     private ListView recipeListView;
-    private ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        allRecipes = new ArrayList<>();
-        recipeListView = findViewById(R.id.recipeListView);
         recipeRetriever = new RecipeRetriever();
         setContentView(R.layout.search_page);
+        recipeListView = findViewById(R.id.recipeListView);
         SearchView searchbar = findViewById(R.id.search);
-        RecipeRetriever.retrieveAllRecipes();
+        allRecipes = recipeRetriever.retrieveAllRecipes();
+        updateListView(allRecipes);
 
         searchbar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -44,14 +43,7 @@ public class Search extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 return false;
             }
-            private void updateListView(List<Recipe> recipes){
-                List<String> recipeNames = new ArrayList<>();
-                for(Recipe recipe: recipes){
-                    recipeNames.add(recipe.getName());
-                }
-                adapter = new ArrayAdapter<>(Search.this, android.R.layout.simple_list_item_1, recipeNames);
-                recipeListView.setAdapter(adapter);
-            }
+
         });
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -62,6 +54,14 @@ public class Search extends AppCompatActivity {
         }
         return false;
         });
+    }
+    private void updateListView(List<Recipe> recipes){
+        List<String> recipeNames = new ArrayList<>();
+        for(Recipe recipe: recipes){
+            recipeNames.add(recipe.getName());
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(Search.this, android.R.layout.simple_list_item_1, recipeNames);
+        recipeListView.setAdapter(adapter);
     }
 
 }
