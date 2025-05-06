@@ -25,14 +25,15 @@ public class RecipeRetriever {
         this.recipeCallback = callback;
     }
 
-    public static void retrieveAllRecipes() {
+    public List<Recipe> retrieveAllRecipes() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference recipeListRef = database.getReference("RecipeList");
-
+        List<Recipe> allRecipes = new ArrayList<>();
         recipeListRef.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<Recipe> allRecipes = new ArrayList<>();
+
 
                 for (DataSnapshot recipeSnapshot : dataSnapshot.getChildren()) {
                     Recipe recipe = recipeSnapshot.getValue(Recipe.class);
@@ -49,13 +50,19 @@ public class RecipeRetriever {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("RecipeRetriever", "Error retrieving recipes: " + databaseError.getMessage());
-                if (recipeCallback != null) {
-                    recipeCallback.onRecipesLoadFailed(databaseError.getMessage());
-                }
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
+
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                Log.e("RecipeRetriever", "Error retrieving recipes: " + databaseError.getMessage());
+//                if (recipeCallback != null) {
+//                    recipeCallback.onRecipesLoadFailed(databaseError.getMessage());
+//                }
+//            }
         });
+        return allRecipes;
     }
 
     public List<Recipe> searchRecipes(List<Recipe> allRecipes, String query) {
