@@ -1,6 +1,7 @@
 package com.example.collegecooks;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -13,10 +14,17 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 
 import java.util.ArrayList;
 
@@ -41,18 +49,9 @@ public class UploadRecipeActivity extends AppCompatActivity {
     private EditText directionsEditText;
     private EditText durationEditText;
     private ImageView recipeImageView;
+    private Uri selectedImageUri;
 
-    private final ActivityResultLauncher<Intent> imagePickerLauncher =
-            registerForActivityResult(
-                    new ActivityResultContracts.StartActivityForResult(),
-                    result -> {
-                        if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                            Intent data = result.getData();
-                            Uri selectedImageUri = data.getData();
-                            recipeImageView.setImageURI(selectedImageUri);
-                        }
-                    }
-            );
+    private ActivityResultLauncher<Intent> imagePickerLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +76,19 @@ public class UploadRecipeActivity extends AppCompatActivity {
         unit5EditText = findViewById(R.id.unit5EditText);
         ingredient5EditText = findViewById(R.id.ingredient5EditText);
         directionsEditText = findViewById(R.id.DirectionsEditText);
-        // Initialize the new views
+
         recipeImageView = findViewById(R.id.recipeImageView);
         Button selectImageButton = findViewById(R.id.selectImageButton);
         Button uploadButton = findViewById(R.id.uploadButton);
+        imagePickerLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        selectedImageUri = result.getData().getData();
+                        recipeImageView.setImageURI(selectedImageUri);
+                    }
+                }
+        );
 
         // Set click listener for the select image button
         selectImageButton.setOnClickListener(new View.OnClickListener() {
@@ -90,12 +98,14 @@ public class UploadRecipeActivity extends AppCompatActivity {
             }
         });
 
+
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 uploadRecipe();
             }
         });
+
         //return false;
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -106,6 +116,7 @@ public class UploadRecipeActivity extends AppCompatActivity {
             }
             return false;
         });
+
     }
 
     private void selectImage() {
@@ -117,34 +128,50 @@ public class UploadRecipeActivity extends AppCompatActivity {
      * Uploads the recipe into Firebase
      */
     private void uploadRecipe() {
-        //makes sure all required fields are filled in, does not allow user to upload otherwise
         if (!validateForm()) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return;
         }
-        //constructs the components of a recipe object
-        String recipeName = recipeNameEditText.getText().toString();
-        ArrayList <Ingredient> ingredients = makeIngredientList();
-        String directions = directionsEditText.getText().toString();
-        String duration = durationEditText.getText().toString();
-        //creates the recipe object
-        Recipe recipe = new Recipe(recipeName, duration, ingredients, directions );
-        //Logs the firebase upload and pushes the recipe components to firebase
-        Log.d("UploadRecipeActivity", "Creating firebase instance");
+
+        String recipeName = recipeNameEditText.getText().toString().trim();
+        ArrayList<Ingredient> ingredients = makeIngredientList();
+        String directions = directionsEditText.getText().toString().trim();
+        String duration = durationEditText.getText().toString().trim();
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        Log.d("UploadRecipeActivity", "Creating the reference");
-        DatabaseReference newref = database.getReference("RecipeList");
-        Log.d("UploadRecipeActivity" , "Setting reference value");
-        newref.child(recipeName).setValue(recipe)
-                .addOnSuccessListener(aVoid -> {
-                    clearForm();
-                    Toast.makeText(this, "Recipe Uploaded Successfully!", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Failed to upload recipe: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                });
+        DatabaseReference newRef = database.getReference("RecipeList");
 
+        if (selectedImageUri != null) {
+            // Upload image to Firebase Storage
+            StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+            StorageReference imageRef = storageRef.child("recipes/" + recipeName + ".jpg");
 
+            imageRef.putFile(selectedImageUri)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        // Get the image URL
+                        imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                            String imageUrl = uri.toString();
+
+                            // Create Recipe with imageUrl
+                            Recipe recipe = new Recipe(recipeName, duration, ingredients, directions, imageUrl);
+
+                            newRef.child(recipeName)
+                                    .setValue(recipe)
+                                    .addOnSuccessListener(aVoid -> {
+                                        clearForm();
+                                        Toast.makeText(this, "Recipe Uploaded Successfully!", Toast.LENGTH_SHORT).show();
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Toast.makeText(this, "Failed to upload recipe: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                    });
+                        });
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    });
+        } else {
+            Toast.makeText(this, "Please select an image", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**

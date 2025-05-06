@@ -1,5 +1,7 @@
 package com.example.collegecooks;
 
+import androidx.annotation.NonNull;
+
 public class Ingredient {
     private double amt;
     private String unit;
@@ -23,7 +25,7 @@ public class Ingredient {
     public String getInfo() {
         return info;
     }
-
+    
     public void setAmt(double ingredientAmt) {
         amt = ingredientAmt;
     }
