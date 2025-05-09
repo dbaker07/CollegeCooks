@@ -126,8 +126,18 @@ public class UploadRecipeActivity extends AppCompatActivity {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference newRef = database.getReference("RecipeList");
+        Recipe recipe = new Recipe(recipeName, duration, ingredients, directions);
 
-        if (selectedImageUri != null) {
+        newRef.child(recipeName)
+                .setValue(recipe)
+                .addOnSuccessListener(aVoid -> {
+                    clearForm();
+                    Toast.makeText(this, "Recipe Uploaded Successfully!", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> Toast.makeText(this, "Failed to upload recipe: " + e.getMessage(), Toast.LENGTH_LONG).show());
+
+
+        /*if (selectedImageUri != null) {
             // Upload image to Firebase Storage
             StorageReference storageRef = FirebaseStorage.getInstance().getReference();
             StorageReference imageRef = storageRef.child("recipes/" + recipeName + ".jpg");
@@ -136,24 +146,15 @@ public class UploadRecipeActivity extends AppCompatActivity {
                     .addOnSuccessListener(taskSnapshot -> {
                         // Get the image URL
                         imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                            String imageUrl = uri.toString();
+                            String imageUrl = uri.toString();*/
 
                             // Create Recipe with imageUrl
-                            Recipe recipe = new Recipe(recipeName, duration, ingredients, directions, imageUrl);
 
-                            newRef.child(recipeName)
-                                    .setValue(recipe)
-                                    .addOnSuccessListener(aVoid -> {
-                                        clearForm();
-                                        Toast.makeText(this, "Recipe Uploaded Successfully!", Toast.LENGTH_SHORT).show();
-                                    })
-                                    .addOnFailureListener(e -> Toast.makeText(this, "Failed to upload recipe: " + e.getMessage(), Toast.LENGTH_LONG).show());
-                        });
-                    })
-                    .addOnFailureListener(e -> Toast.makeText(this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_LONG).show());
-        } else {
+                    /*.addOnFailureListener(e -> Toast.makeText(this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_LONG).show());
+        } */
+        /*else {
             Toast.makeText(this, "Please select an image", Toast.LENGTH_SHORT).show();
-        }
+        }*/
     }
 
     /**
