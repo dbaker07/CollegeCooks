@@ -12,12 +12,7 @@
           "package_name": "com.example.collegecooks"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "147496160254-5k1phevrur31nn542dgp3766p5rg52fs.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
           "current_key": "AIzaSyATkvyIkbhScboo7xsR4t365fIwZFVUBYI"
@@ -25,12 +20,7 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "147496160254-5k1phevrur31nn542dgp3766p5rg52fs.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

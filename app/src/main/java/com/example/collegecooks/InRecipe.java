@@ -2,9 +2,6 @@ package com.example.collegecooks;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +37,6 @@ public class InRecipe extends AppCompatActivity {
         //String recipeKey = getIntent().getStringExtra("A");
         String recipeKey = "Cool Steak";
 
-        assert recipeKey != null;
         DatabaseReference recipeRef = FirebaseDatabase.getInstance()
                 .getReference("RecipeList").child(recipeKey);
 
@@ -91,10 +87,4 @@ public class InRecipe extends AppCompatActivity {
         });
     }
 }
-
-
-/*public class InRecipe extends AppCompatActivity {
-    private TextView recipeNameTextView;
-    private TextView ingredientsTextView;
-    private TextView directionsTextView;*/
 

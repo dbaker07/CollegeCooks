@@ -15,7 +15,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         <activity
-            android:name=".InRecipe"
+            android:name=".UploadRecipeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".UploadRecipeActivity"/>
+        <activity android:name=".InRecipe"/>
         <activity android:name=".MainActivity"/>
         <activity android:name=".Search"/>
 
