@@ -1,12 +1,10 @@
 package com.example.collegecooks;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,9 +12,6 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -91,23 +86,14 @@ public class UploadRecipeActivity extends AppCompatActivity {
         );
 
         // Set click listener for the select image button
-        selectImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectImage();
-            }
-        });
+        selectImageButton.setOnClickListener(v -> selectImage());
 
 
-        uploadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                uploadRecipe();
-            }
-        });
+        uploadButton.setOnClickListener(v -> uploadRecipe());
 
         //return false;
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.upload_recipe);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.search_nav) {
                 Intent i = new Intent(UploadRecipeActivity.this, Search.class);
@@ -161,14 +147,10 @@ public class UploadRecipeActivity extends AppCompatActivity {
                                         clearForm();
                                         Toast.makeText(this, "Recipe Uploaded Successfully!", Toast.LENGTH_SHORT).show();
                                     })
-                                    .addOnFailureListener(e -> {
-                                        Toast.makeText(this, "Failed to upload recipe: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                                    });
+                                    .addOnFailureListener(e -> Toast.makeText(this, "Failed to upload recipe: " + e.getMessage(), Toast.LENGTH_LONG).show());
                         });
                     })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                    });
+                    .addOnFailureListener(e -> Toast.makeText(this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_LONG).show());
         } else {
             Toast.makeText(this, "Please select an image", Toast.LENGTH_SHORT).show();
         }
