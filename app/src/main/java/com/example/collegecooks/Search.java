@@ -1,37 +1,49 @@
 package com.example.collegecooks;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.SearchView;
 
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Search extends AppCompatActivity {
+    private RecipeRetriever recipeRetriever;
+    private List<Recipe> allRecipes;
+    private ListView recipeListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        recipeRetriever = new RecipeRetriever();
         setContentView(R.layout.search_page);
+        recipeListView = findViewById(R.id.recipeListView);
         SearchView searchbar = findViewById(R.id.search);
+        allRecipes = recipeRetriever.retrieveAllRecipes();
+        updateListView(allRecipes);
 
         searchbar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Intent i = new Intent(Search.this, UploadRecipeActivity.class);
-                Search.this.startActivity(i);
-                return true;
+                List<Recipe> filteredRecipes = recipeRetriever.searchRecipes(allRecipes, query);
+                updateListView(filteredRecipes);
+                return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
             }
+
         });
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -40,13 +52,16 @@ public class Search extends AppCompatActivity {
             Search.this.startActivity(i);
             return true;
         }
-        if (item.getItemId() == R.id.search_nav) {
-            Intent i = new Intent(Search.this, Search.class);
-            Search.this.startActivity(i);
-            return true;
-        }
         return false;
         });
+    }
+    private void updateListView(List<Recipe> recipes){
+        List<String> recipeNames = new ArrayList<>();
+        for(Recipe recipe: recipes){
+            recipeNames.add(recipe.getName());
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(Search.this, android.R.layout.simple_list_item_1, recipeNames);
+        recipeListView.setAdapter(adapter);
     }
 
 }
