@@ -22,22 +22,20 @@ public class RecipeRetriever {
     private static RecipeCallback recipeCallback;
 
     public void setRecipeCallback(RecipeCallback callback) {
-        this.recipeCallback = callback;
+        recipeCallback = callback;
     }
 
-    public List<Recipe> retrieveAllRecipes() {
+    public void retrieveAllRecipes() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference recipeListRef = database.getReference("RecipeList");
-        List<Recipe> allRecipes = new ArrayList<>();
+
         recipeListRef.addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
+                List<Recipe> allRecipes = new ArrayList<>();
                 for (DataSnapshot recipeSnapshot : dataSnapshot.getChildren()) {
                     Recipe recipe = recipeSnapshot.getValue(Recipe.class);
-
                     if (recipe != null) {
                         allRecipes.add(recipe);
                     } else {
@@ -50,19 +48,13 @@ public class RecipeRetriever {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("RecipeRetriever", "Error retrieving recipes: " + databaseError.getMessage());
+                if (recipeCallback != null) {
+                    recipeCallback.onRecipesLoadFailed(databaseError.getMessage());
+                }
             }
-
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                Log.e("RecipeRetriever", "Error retrieving recipes: " + databaseError.getMessage());
-//                if (recipeCallback != null) {
-//                    recipeCallback.onRecipesLoadFailed(databaseError.getMessage());
-//                }
-//            }
         });
-        return allRecipes;
     }
 
     public List<Recipe> searchRecipes(List<Recipe> allRecipes, String query) {

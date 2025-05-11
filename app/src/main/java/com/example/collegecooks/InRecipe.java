@@ -2,6 +2,7 @@ package com.example.collegecooks;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,11 +32,14 @@ public class InRecipe extends AppCompatActivity {
         recipeNameTextView = findViewById(R.id.recipeNameTextView);
         ingredientsTextView = findViewById(R.id.ingredientsTextView);
         directionsTextView = findViewById(R.id.directionsTextView);
+        Button backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(v -> finish());
+
         //recipeImageView = findViewById(R.id.recipeImageView);
 
         // Get the recipe key (name or Firebase ID passed from previous screen)
         //String recipeKey = getIntent().getStringExtra("A");
-        String recipeKey = "Cool Steak";
+        String recipeKey = getIntent().getStringExtra("recipe_name");
 
         DatabaseReference recipeRef = FirebaseDatabase.getInstance()
                 .getReference("RecipeList").child(recipeKey);
@@ -75,16 +79,16 @@ public class InRecipe extends AppCompatActivity {
                                 .placeholder(R.drawable.ic_placeholder)
                                 .into(recipeImageView);
                     }*/
-                } else {
-                    Toast.makeText(InRecipe.this, "Recipe not found", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(InRecipe.this, "Recipe not found", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(InRecipe.this, "Error loading recipe", Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(InRecipe.this, "Error loading recipe", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
-}
 
