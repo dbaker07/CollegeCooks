@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--Colors used for the navigation bar
+
+        When the nav bar tab is active-->
     <item android:color="@color/ccOtherRed" android:state_checked="true"/>
+    <!-- When the nav bar tab is inactive -->
     <item android:color="@color/ccRed" android:state_checked="false"/>
 </selector>

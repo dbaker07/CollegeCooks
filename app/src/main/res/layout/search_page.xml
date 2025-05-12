@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:fitsSystemWindows="true">
-
+    <!--Title of the Page-->
     <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"
@@ -17,19 +17,19 @@
         android:paddingEnd="16dp"
         android:paddingBottom="16dp"
         android:text="@string/recipeSearch" />
-
+    <!--Displays the search bar to the user-->
     <SearchView
         android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
+    <!--Displays all of the recipes in a list to the user and hows users certain recipes when they search for recipes-->
     <ListView
         android:id="@+id/recipeListView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
 
-
+    <!--Bottom navigation bar - allows the user to navigate the tabs of the app-->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"

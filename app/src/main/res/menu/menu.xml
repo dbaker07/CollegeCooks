@@ -1,5 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!--We didn't use the actual menu but we used the xml file to create the tabs on the nav bar-->
     <item
         android:id="@+id/upload_recipe"
         android:icon="@android:drawable/ic_menu_add"

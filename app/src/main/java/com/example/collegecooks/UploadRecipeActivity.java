@@ -52,7 +52,7 @@ public class UploadRecipeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.upload_recipe);
-        //Converts each xml object into a java object
+        //Initializes each edit text xml box in the java code
         recipeNameEditText = findViewById(R.id.recipeNameEditText);
         durationEditText = findViewById(R.id.durationEditText);
         amt1EditText = findViewById(R.id.amt1EditText);
