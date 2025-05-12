@@ -33,4 +33,7 @@
     <string name="recipe_image">Recipe Image</string>
     <string name="action_settings">settings\n</string>
     <string name="upload_a_recipe">Upload a recipe!</string>
+    <string name="ingredient_title">Ingredients:</string>
+    <string name ="directions_title">Directions:</string>
+    <string name="duration_title">Duration:</string>
 </resources>
