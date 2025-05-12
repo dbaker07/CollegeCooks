@@ -27,7 +27,7 @@ import java.util.List;
 
 public class Search extends AppCompatActivity {
     private RecipeRetriever recipeRetriever;
-    private List<Recipe> allRecipes; // Keep this to hold the loaded recipes
+    private List<Recipe> allRecipes;
     private ListView recipeListView;
 
     @Override
@@ -72,7 +72,7 @@ public class Search extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // Make sure allRecipes is not null before searching
+                // Makes sure allRecipes is not null before searching
                 if (allRecipes != null) {
                     List<Recipe> filteredRecipes = recipeRetriever.searchRecipes(allRecipes, newText);
                     updateListView(filteredRecipes);
@@ -88,7 +88,7 @@ public class Search extends AppCompatActivity {
                 // Get the clicked recipe name from the adapter
                 String clickedRecipeName = (String) parent.getItemAtPosition(position);
 
-                // Find the corresponding Recipe object from your allRecipes list
+                // Find the corresponding Recipe object from RecipeList
                 Recipe selectedRecipe = null;
                 if (allRecipes != null) {
                     for (Recipe recipe : allRecipes) {
@@ -106,7 +106,7 @@ public class Search extends AppCompatActivity {
 
                     startActivity(intent);
                 } else {
-                    // Handle the case where the recipe object was not found (shouldn't happen if your data is consistent)
+                    // Handle the case where the recipe object was not found
                     Toast.makeText(Search.this, "Could not find recipe details.", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -114,6 +114,7 @@ public class Search extends AppCompatActivity {
 
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.search_nav);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.upload_recipe) {
                 Intent i = new Intent(Search.this, UploadRecipeActivity.class);

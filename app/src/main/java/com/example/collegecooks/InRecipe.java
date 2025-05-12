@@ -28,19 +28,17 @@ public class InRecipe extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_recipe);
-
+        //initialize the textViews and buttons
         recipeNameTextView = findViewById(R.id.recipeNameTextView);
         ingredientsTextView = findViewById(R.id.ingredientsTextView);
         directionsTextView = findViewById(R.id.directionsTextView);
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> finish());
 
-        //recipeImageView = findViewById(R.id.recipeImageView);
-
-        // Get the recipe key (name or Firebase ID passed from previous screen)
-        //String recipeKey = getIntent().getStringExtra("A");
+        //Gets the recipe to be displayed (passed from the search page
         String recipeKey = getIntent().getStringExtra("recipe_name");
-
+        //pulls the recipe from firebase
+        assert recipeKey != null;
         DatabaseReference recipeRef = FirebaseDatabase.getInstance()
                 .getReference("RecipeList").child(recipeKey);
 
@@ -48,7 +46,7 @@ public class InRecipe extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Recipe recipe = snapshot.getValue(Recipe.class);
-
+                    //creates the format that the recipe will be displayed in
                 if (recipe != null) {
                     recipeNameTextView.setText(recipe.getName());
                     ArrayList<Ingredient> ingredients = recipe.getIngredients();
@@ -68,22 +66,15 @@ public class InRecipe extends AppCompatActivity {
                         String nullValue = "No ingredients found.";
                         ingredientsTextView.setText(nullValue);
                     }
-                    //ingredientsTextView.setText(ingredientsBuilder.toString());
 
                     directionsTextView.setText(recipe.getDirections());
 
-                    // Display image using Glide or Picasso
-                   /* if (recipe.getImageUrl() != null && !recipe.getImageUrl().isEmpty()) {
-                        Glide.with(InRecipe.this)
-                                .load(recipe.getImageUrl())
-                                .placeholder(R.drawable.ic_placeholder)
-                                .into(recipeImageView);
-                    }*/
+
                     } else {
                         Toast.makeText(InRecipe.this, "Recipe not found", Toast.LENGTH_SHORT).show();
                     }
                 }
-
+                //if recipe isn't able to be loaded for one reason or another...
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     Toast.makeText(InRecipe.this, "Error loading recipe", Toast.LENGTH_SHORT).show();

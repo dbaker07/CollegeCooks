@@ -88,12 +88,13 @@ public class UploadRecipeActivity extends AppCompatActivity {
         // Set click listener for the select image button
         selectImageButton.setOnClickListener(v -> selectImage());
 
-
+        // Set click listener for the upload button
         uploadButton.setOnClickListener(v -> uploadRecipe());
 
-        //return false;
+        //creates an instance of the bottom nav bar and sets the selected page to the current page
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.upload_recipe);
+        //tells the app to switch the page when the search page button is clicked
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.search_nav) {
                 Intent i = new Intent(UploadRecipeActivity.this, Search.class);
@@ -105,6 +106,9 @@ public class UploadRecipeActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Selects an image to upload with the recipe (image does not currently upload)
+     */
     private void selectImage() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         imagePickerLauncher.launch(intent);
@@ -118,16 +122,17 @@ public class UploadRecipeActivity extends AppCompatActivity {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return;
         }
-
+        //create values for the variables for the recipe constructor
         String recipeName = recipeNameEditText.getText().toString().trim();
         ArrayList<Ingredient> ingredients = makeIngredientList();
         String directions = directionsEditText.getText().toString().trim();
         String duration = durationEditText.getText().toString().trim();
-
+        //creates an instance of the firebase database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference newRef = database.getReference("RecipeList");
+        //constructs the recipe object to upload into firebase
         Recipe recipe = new Recipe(recipeName, duration, ingredients, directions);
-
+        //pushes the recipe to firebase
         newRef.child(recipeName)
                 .setValue(recipe)
                 .addOnSuccessListener(aVoid -> {
@@ -136,25 +141,6 @@ public class UploadRecipeActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> Toast.makeText(this, "Failed to upload recipe: " + e.getMessage(), Toast.LENGTH_LONG).show());
 
-
-        /*if (selectedImageUri != null) {
-            // Upload image to Firebase Storage
-            StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-            StorageReference imageRef = storageRef.child("recipes/" + recipeName + ".jpg");
-
-            imageRef.putFile(selectedImageUri)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        // Get the image URL
-                        imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                            String imageUrl = uri.toString();*/
-
-                            // Create Recipe with imageUrl
-
-                    /*.addOnFailureListener(e -> Toast.makeText(this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_LONG).show());
-        } */
-        /*else {
-            Toast.makeText(this, "Please select an image", Toast.LENGTH_SHORT).show();
-        }*/
     }
 
     /**
@@ -231,6 +217,10 @@ public class UploadRecipeActivity extends AppCompatActivity {
             return null;
         }
     }
+
+    /**
+     * Resets the Upload Recipe page to be clear so it can be used again
+     */
     public void clearForm() {
         recipeNameEditText.setText("");
         durationEditText.setText("");
