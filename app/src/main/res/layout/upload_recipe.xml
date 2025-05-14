@@ -286,13 +286,13 @@
             <EditText
                 android:id="@+id/DirectionsEditText"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:layout_weight="1"
                 android:gravity="top"
                 android:hint="@string/directions"
                 android:importantForAutofill="no"
-                android:inputType="textCapWords"
+                android:inputType="textMultiLine|textCapSentences"
                 android:maxWidth="488dp"
                 android:minHeight="48dp"
                 tools:ignore="VisualLintTextFieldSize" />
